@@ -1,6 +1,5 @@
 
 import Container from "./components/Container";
-import ProfileCard from "./components/ProfileCard";
 import Hero from "./components/Hero";
 import LinesBackground from "./components/LinesBackground";
 
@@ -12,17 +11,24 @@ import {
 } from "@/components/ui/tabs"
 import Profiles from "./components/Profiles";
 import Claimeos from "./components/Claimeos";
-export default function Home() {
 
+interface Props {
+  params: {[key: string]: string | string[] | undefined};
+  searchParams: Promise<{[key: string]: string | string[] | undefined}> 
+}
+
+export default async function Home({params, searchParams}:Props) {
+
+  const search =  await searchParams
+  const { date } = search
 
   return (
     <main className="min-h-screen ">
       <Hero />
-      <LinesBackground />
-      <Container>
 
+      <Container>
         <Tabs defaultValue="account">
-          <TabsList className="grid w-[400px] grid-cols-2">
+          <TabsList className="grid max-w-[400px] grid-cols-2 w-full">
             <TabsTrigger value="account">Streamers</TabsTrigger>
             <TabsTrigger value="password">Lista de Claimeos</TabsTrigger>
           </TabsList>
@@ -30,12 +36,10 @@ export default function Home() {
             <Profiles />
           </TabsContent>
           <TabsContent value="password">
-            <Claimeos />
+            <Claimeos date={date as string} />
           </TabsContent>
         </Tabs>
       </Container>
-     
-
     </main>
   );
 }

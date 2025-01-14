@@ -9,7 +9,7 @@ export default function LinesBackground() {
 
             <div className="size-72  bg-primary/30 blur-[140px] absolute top-20 right-32"> </div>
             <div className="size-96  bg-primary/15 blur-[100px] absolute top-[28rem] -left-[14rem]"> </div>
-            <div className="size-96  bg-primary/15 blur-[100px] absolute -bottom-[28rem] right-[4rem]"> </div>
+            <div className="size-96 -z-10 bg-primary/15 blur-[100px] absolute -bottom-[28rem] right-[4rem]"> </div>
         </>
     )
 }

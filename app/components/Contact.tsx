@@ -17,47 +17,28 @@ import { Input } from "@/components/ui/input";
 import { CalendarInput } from "./CalendarInput";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function Contact() {
+export default function Contact({children}:{children:React.ReactNode}) {
 
-    const [date, setDate] = useState<Date | undefined>(new Date())
+    // const [date, setDate] = useState<Date | undefined>(new Date())
     const [open, setOpen] = useState(false);
 
     return (
         <>
             <div className="text-gray-400 flex items-center gap-2 mb-6 text-sm">
                 <CircleAlert width={20} height={20} />
-                <p> Tienes algo que decir? <Button onClick={() => setOpen(true)} variant={'link'} className="px-1">Contactame</Button> </p>
+                <p> Tienes algo que claimear? <Button onClick={() => setOpen(true)} variant={'link'} className="px-1">Contactame</Button> </p>
             </div>
             <Dialog open={open} onOpenChange={() => setOpen(false)}>
-                <DialogContent>
+                <DialogContent className=" w-[90%]">
                     <DialogHeader>
-                        <DialogTitle>🚀 Contactame</DialogTitle>
-                        <DialogDescription>
+                        <DialogTitle className="text-left">🚀 Contactame</DialogTitle>
+                        <DialogDescription className="text-left">
                             Proporciona la informacion sobre el claimeo llenando los campos del formulario
                         </DialogDescription>
                     </DialogHeader>
-                    <form>
-                        <div className="space-y-4">
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Claimeo</Label>
-                                <Input type="name" id="name" placeholder="Ej. callate el osico!" />
-                            </div>
-                            <CalendarInput />
-                            <div className="grid gap-2">
-                                <Label htmlFor="description">Descripcion</Label>
-                                <Textarea id="description" placeholder="Ej: Jugando Fortnite en el minuto..." className="resize-none " />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="link">Link del clip donde se realizo el claimeo</Label>
-                                <Input type="link" id="link" placeholder="https://www.twitch.tv/elded..." />
-                            </div>
-                        </div>
-                        <div className="flex justify-end gap-4 mt-6">
-                            <Button type="button" onClick={() => setOpen(false)} variant={"outline"}>Cancelar</Button>
-                            <Button> <SendIcon /> Enviar</Button>
-                        </div>
-
-                    </form>
+                    <div>
+                        {children}
+                    </div>
                 </DialogContent>
             </Dialog>
 

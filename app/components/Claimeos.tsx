@@ -1,32 +1,39 @@
-'use client'
-import { Calendar } from '@/components/ui/calendar'
-import React, { useState } from 'react'
 import ClaimeoItem from './ClaimeoItem'
-import { BookText } from 'lucide-react'
+import {  Filter, Trash } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import CalendarClaimeos from './CalendarClaimeos'
+import BadgesClaimeos from './BadgesClaimeos'
+import { getClaimeos, getClaimeosByDate } from '@/services/claimeos.services'
+import Link from 'next/link'
 
-export default function Claimeos() {
+export default async function Claimeos({date}:{date:string | undefined}) {
 
-    const [date, setDate] = useState<Date | undefined>(new Date())
-
+    
+    const data = !date ? await getClaimeos() : await getClaimeosByDate(new Date(date))
+    
+    
     return (
-        <div className='grid grid-cols-[250px_1fr] gap-10 py-20 items-start'>
-            <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                className="rounded-md border sticky top-10"
-            />
+        <div className='grid md:grid-cols-[250px_1fr] gap-10 py-20 items-start'>
             <div>
-                <div className='inline-flex gap-2 items-center rounded-full font-normal transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 select-none text-foreground badge-outline border-none px-5 py-1.5 text-sm relative z-20'>
-                <BookText width={14} />
-                    Claimeos
-                </div>
+                <Button className='w-full mb-8'> <Filter /> Filtrar por fecha</Button>
+                <CalendarClaimeos />
+                {date && <Button variant={'outline'}  className='w-full mt-4' asChild>
+                        <Link href={`/`} className='block' scroll={false}>
+                            <Trash /> Resetear
+                            </Link>
+                    </Button>}
+            </div>
+            <div>
+                <BadgesClaimeos />
                 <p className='text-white/60 mt-4 mb-6'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt voluptatem ipsum esse tempora in earum, eum cumque labore atque! Exercitationem, alias</p>
+                {data?.length === 0 && <p className='text-red-400 mt-4 mb-6'>No hay resultados para esta fecha</p>}
                 <div className='mt-6 grid gap-6'>
-                    <ClaimeoItem />
-                    <ClaimeoItem />
-                    <ClaimeoItem />
-                    <ClaimeoItem />
+                    {
+                        data?.map((claimeo, index) => {
+                            return <ClaimeoItem claimeo={claimeo} key={index} />
+                        })
+                    }
+                    
                 </div>
             </div>
         </div>

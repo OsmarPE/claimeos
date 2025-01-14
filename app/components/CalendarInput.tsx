@@ -14,12 +14,11 @@ import {
 } from "@/components/ui/popover"
 import { Label } from "@/components/ui/label"
 
-export function CalendarInput() {
-    const [date, setDate] = React.useState<Date>()
+export function CalendarInput({date, setDate}:{date:Date | undefined, setDate:React.Dispatch<React.SetStateAction<Date | undefined>>}) {
 
     return (
         <div className="grid gap-2">
-            <Label htmlFor="email">Fecha del Claimeo</Label>
+            <Label htmlFor="date">Fecha del Claimeo</Label>
             <Popover>
                 <PopoverTrigger asChild>
                     <Button
@@ -30,7 +29,7 @@ export function CalendarInput() {
                         )}
                     >
                         <CalendarIcon />
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        {date ? format(date, "PPP") : <span>Selecciona una fecha</span>}
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
